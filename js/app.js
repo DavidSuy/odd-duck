@@ -2,12 +2,13 @@
 
 // Global Variables
 let allProducts = [];
-let clicks = 0;
-let clicksAllowed = 0;
+let votes = 0;
+let votesAllowed = 25;
 
 // DOM Elements
 let productContainer = document.getElementById("productContainer");
 let ul = document.querySelector("ul");
+let resultButton = document.querySelector("aside > div");
 
 let imageOne = document.getElementById("img-one");
 let imageTwo = document.getElementById("img-two");
@@ -17,11 +18,11 @@ let imageThree = document.getElementById("img-three");
 function Product(name, fileExt = "jpg") {
   this.name = name;
   this.src = `images/${this.name}.${fileExt}  `;
-  this.clicks = 0;
+  this.votes = 0;
   this.views = 0;
 }
 
-// functions
+// Functions
 function getRandomProduct() {
   return Math.floor(Math.random() * allProducts.length);
 }
@@ -39,12 +40,6 @@ function renderProduct() {
     productThree = getRandomProduct();
   }
 
-  // while (productTwo === productThree || productThree === productOne) {
-  //   productThree = getRandomProduct();
-  // }
-  // console.log(productOne, productTwo, productThree);
-  // console.log(allProducts);
-
   imageOne.src = allProducts[productOne].src;
   imageOne.alt = allProducts[productOne].name;
   allProducts[productOne].views++;
@@ -54,6 +49,39 @@ function renderProduct() {
   imageThree.src = allProducts[productThree].src;
   imageThree.alt = allProducts[productThree].name;
   allProducts[productThree].views++;
+}
+
+function renderResults() {
+  for (let i = 0; i < allProducts.length; i++) {
+    let li = document.createElement("li");
+    li.textContent = `${allProducts[i].name} has ${allProducts[i].views} views and have ${allProducts[i].votes} voted`;
+    ul.appendChild(li);
+  }
+}
+
+// Event Handler
+function handleProdClick(e) {
+  // if (e.target === productContainer) {
+  //   alert("Please click on an Odd Duck product");
+  // }
+  votes++;
+  let clickedProd = e.target.alt;
+  for (let i = 0; i < allProducts.length; i++) {
+    if (clickedProd === allProducts[i].name) {
+      allProducts[i].votes++;
+      break;
+    }
+  }
+  renderProduct();
+  if (votes === votesAllowed) {
+    resultButton.className = "clicks-allowed";
+    productContainer.addEventListener("click", handleProdClick);
+    resultButton.addEventListener("click", handleButtonClick);
+  }
+}
+
+function handleButtonClick(e) {
+  renderResults();
 }
 
 // Excutable Code
@@ -105,3 +133,6 @@ console.log(allProducts);
 // console.log(allProducts[2].name);
 
 renderProduct();
+
+// Event listener
+productContainer.addEventListener("click", handleProdClick);

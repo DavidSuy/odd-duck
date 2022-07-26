@@ -19,6 +19,7 @@ header {
 aside {
   border: 5px solid blue;
   grid-area: aside;
+  width: 300px;
 }
 
 footer {
@@ -43,3 +44,22 @@ footer {
   border: 5px solid blue;
 }
 
+/* -- button -- */
+aside > div {
+  background-color: grey;
+  padding: .5rem 1rem;
+  width: max-content;
+  height: max-content;
+
+  pointer-events: none;
+}
+
+aside > div.clicks-allowed {
+  pointer-events: auto;
+  cursor: pointer;
+  background-color: blue;
+}
+
+aside > div.clicks-allowed:hover {
+  background-color: lightblue;
+}
