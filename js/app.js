@@ -62,8 +62,43 @@ function renderProduct() {
 let bag = new Product("bag");
 let banana = new Product("banana");
 let bathroom = new Product("bathroom");
+let boots = new Product("boots");
+let breakfast = new Product("breakfast");
+let bubblegum = new Product("bubblegum");
+let chair = new Product("chair");
+let cthulhu = new Product("cthulhu");
+let dogDuck = new Product("dog-duck");
+let dragon = new Product("dragon");
+let pen = new Product("pen");
+let petSweep = new Product("pet-sweep");
+let scissors = new Product("scissors");
+let shark = new Product("shark");
+let sweep = new Product("sweep", "png");
+let tauntaun = new Product("tauntaun");
+let unicorn = new Product("unicorn");
+let waterCan = new Product("water-can");
+let wineGlass = new Product("wine-glass");
 
-allProducts.push(bag, banana, bathroom);
+allProducts.push(
+  bag,
+  banana,
+  bathroom,
+  boots,
+  breakfast,
+  bubblegum,
+  chair,
+  cthulhu,
+  dogDuck,
+  dragon,
+  pen,
+  petSweep,
+  scissors,
+  shark,
+  tauntaun,
+  unicorn,
+  waterCan,
+  wineGlass
+);
 console.log(allProducts);
 // console.log(allProducts[0].name);
 // console.log(allProducts[1].name);
