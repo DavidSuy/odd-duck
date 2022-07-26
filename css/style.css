@@ -6,9 +6,15 @@ body {
   display: grid;
   /* grid-template-columns: repeat(3, 1fr); */
   /* grid-template-columns: repeat(4, 1fr); */
-  grid-template: 'header header header'
+  /* grid-template: 'header header header'
                  'aside main main'
                  'aside article article'
+                 'canvas canvas canvas'
+                 'footer footer footer'; */
+  grid-template: 'header header header'
+                 'main main main'
+                 'article article article'
+                 'canvas canvas canvas'
                  'footer footer footer';
 }
 
@@ -39,7 +45,7 @@ footer {
   width: 350px;
 }
 
-#productContainer + p {
+article {
   grid-area: article;
   border: 5px solid blue;
 }
@@ -62,4 +68,13 @@ aside > div.clicks-allowed {
 
 aside > div.clicks-allowed:hover {
   background-color: lightblue;
+}
+
+
+article + div {
+  grid-area: canvas;
+  /* background-color: red; */
+}
+
+canvas {
 }

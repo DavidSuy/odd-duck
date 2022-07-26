@@ -2,6 +2,7 @@
 
 // Global Variables
 let allProducts = [];
+let indexArray = [];
 let votes = 0;
 let votesAllowed = 25;
 
@@ -28,17 +29,28 @@ function getRandomProduct() {
 }
 
 function renderProduct() {
-  let productOne = getRandomProduct();
-  let productTwo = getRandomProduct();
-  let productThree = getRandomProduct();
+  // let productOne = getRandomProduct();
+  // let productTwo = getRandomProduct();
+  // let productThree = getRandomProduct();
 
-  while (productOne === productTwo || productOne === productThree) {
-    productTwo = getRandomProduct();
-    productThree = getRandomProduct();
+  // while (productOne === productTwo || productOne === productThree) {
+  //   productTwo = getRandomProduct();
+  //   productThree = getRandomProduct();
+  // }
+  // while (productTwo === productThree || productThree === productOne) {
+  //   productThree = getRandomProduct();
+  // }
+
+  while (indexArray.length < 6) {
+    let ranNum = getRandomProduct();
+    if (!indexArray.includes(ranNum)) {
+      indexArray.push(ranNum);
+    }
   }
-  while (productTwo === productThree || productThree === productOne) {
-    productThree = getRandomProduct();
-  }
+
+  let productOne = indexArray.shift();
+  let productTwo = indexArray.shift();
+  let productThree = indexArray.shift();
 
   imageOne.src = allProducts[productOne].src;
   imageOne.alt = allProducts[productOne].name;
@@ -74,14 +86,64 @@ function handleProdClick(e) {
   }
   renderProduct();
   if (votes === votesAllowed) {
-    resultButton.className = "clicks-allowed";
-    productContainer.addEventListener("click", handleProdClick);
-    resultButton.addEventListener("click", handleButtonClick);
+    // resultButton.className = "clicks-allowed";
+    productContainer.removeEventListener("click", handleProdClick);
+    renderChart();
+    // resultButton.addEventListener("click", handleButtonClick);
   }
 }
 
 function handleButtonClick(e) {
-  renderResults();
+  if (votes === votesAllowed) {
+    renderResults();
+  }
+}
+
+// ChartJS
+function renderChart() {
+  let prodName = [];
+  let prodViews = [];
+  let prodVotes = [];
+  for (let i = 0; i < allProducts.length; i++) {
+    prodName.push(allProducts[i].name);
+    prodViews.push(allProducts[i].views);
+    prodVotes.push(allProducts[i].votes);
+  }
+
+  console.log(prodName, prodViews, prodVotes);
+  const data = {
+    labels: prodName,
+    datasets: [
+      {
+        label: "Views",
+        data: prodViews,
+        backgroundColor: ["rgba(3, 138, 255)"],
+        borderColor: ["rgb(0, 0, 0)"],
+        borderWidth: 1,
+      },
+      {
+        label: "Clicks/Votes",
+        data: prodVotes,
+        backgroundColor: ["rgba(194, 249, 112)"],
+        borderColor: ["rgb(0, 0, 0)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const config = {
+    type: "bar",
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+
+  const myChart = new Chart(document.getElementById("myChart"), config);
 }
 
 // Excutable Code
@@ -127,7 +189,7 @@ allProducts.push(
   waterCan,
   wineGlass
 );
-console.log(allProducts);
+// console.log(allProducts);
 // console.log(allProducts[0].name);
 // console.log(allProducts[1].name);
 // console.log(allProducts[2].name);
